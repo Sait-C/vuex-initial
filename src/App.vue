@@ -1,21 +1,31 @@
 <template>
-  <h1>
-    {{ store.state.count }}
-  </h1>
-  <button @click="click">Increment</button>
+  <button @click="click(post)" v-for="post in posts" :key="post.id">
+    {{ post.title }}
+  </button>
+  {{ store.state.postId }}
 </template>
 
 <script setup>
 import { useStore } from 'vuex';
 
+const posts = [
+  { id: 1, title: 'Post #1' },
+  { id: 2, title: 'Post #2' },
+]
 const store = useStore();
 
-const click = () => {
-  // commit the mutation
-  store.commit('increment', 10);
+const click = (post) => {
+  store.commit('setPostId', post.id);
 }
 
-console.log(store);
+/* if we prefer the setup function instead of script setup
+return {
+  click,
+  postId: computed(() => store.state.postId)
+  store,
+}
+*/
+
 </script>
 
 <style scoped>

@@ -1,17 +1,18 @@
 import { createStore } from 'vuex';
 
 export const store = createStore({
-    state() { // it is like data() {return{}}
+    // because the state is reactive, 
+    //it's going to rerender the component and everything is going to updated
+    state() {
         return {
-            count: 0 // it is going to be reactive
+            postId: null
         }
     },
 
     // This is where all your methods go that are going to update the state.
     mutations: {
-        increment(state, payload) {
-            //state.count += 1;
-            state.count += payload;
+        setPostId(state, postId) {
+            state.postId = postId;
         }
     }
 })

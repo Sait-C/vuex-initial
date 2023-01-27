@@ -3,6 +3,11 @@
     {{ post.title }}
   </button>
   {{ store.state.postId }}
+
+  <div v-if="currentPost">
+    <h2>{{ currentPost.title }}</h2>
+    <h4>{{ currentPost.content }}</h4>
+  </div>
 </template>
 
 <script setup>
@@ -21,17 +26,14 @@ const fetchData = () => {
 
 const posts = computed(() => store.state.posts);
 
+const currentPost = computed(() => {
+  return store.state.posts.find(x => {
+    return x.id === store.state.postId;
+  })
+})
 onMounted(() => {
   fetchData();
 })
-
-/* if we prefer the setup function instead of script setup
-return {
-  click,
-  postId: computed(() => store.state.postId)
-  store,
-}
-*/
 
 </script>
 

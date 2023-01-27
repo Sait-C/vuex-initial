@@ -6,13 +6,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
 
-const posts = [
-  { id: 1, title: 'Post #1' },
-  { id: 2, title: 'Post #2' },
-]
 const store = useStore();
 
 const click = (post) => {
@@ -20,8 +16,10 @@ const click = (post) => {
 }
 
 const fetchData = () => {
-  store.dispatch('fetchPosts', 'POST');
+  store.dispatch('fetchPosts');
 }
+
+const posts = computed(() => store.state.posts);
 
 onMounted(() => {
   fetchData();

@@ -37,5 +37,14 @@ export const store = createStore({
             await delay(); // simulating
             ctx.commit('setPosts', testPosts);
         }
+    },
+
+    // this is going to be a computed property for your store
+    getters: {
+     currentPost(state) {
+        return state.posts.find(x => {
+          return x.id === state.postId;
+        })
+      }
     }
 })

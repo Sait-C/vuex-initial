@@ -13,24 +13,17 @@
 <script setup>
 import { onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
-
 const store = useStore();
 
 const click = (post) => {
   store.commit('setPostId', post.id);
 }
-
 const fetchData = () => {
   store.dispatch('fetchPosts');
 }
-
 const posts = computed(() => store.state.posts);
+const currentPost = computed(() => store.getters.currentPost); 
 
-const currentPost = computed(() => {
-  return store.state.posts.find(x => {
-    return x.id === store.state.postId;
-  })
-})
 onMounted(() => {
   fetchData();
 })

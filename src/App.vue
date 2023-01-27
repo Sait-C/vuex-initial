@@ -6,6 +6,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const posts = [
@@ -17,6 +18,14 @@ const store = useStore();
 const click = (post) => {
   store.commit('setPostId', post.id);
 }
+
+const fetchData = () => {
+  store.dispatch('fetchPosts', 'POST');
+}
+
+onMounted(() => {
+  fetchData();
+})
 
 /* if we prefer the setup function instead of script setup
 return {

@@ -16,13 +16,13 @@ import { useStore } from 'vuex';
 const store = useStore();
 
 const click = (post) => {
-  store.commit('setPostId', post.id);
+  store.commit('posts/setPostId', post.id);
 }
 const fetchData = () => {
-  store.dispatch('fetchPosts');
+  store.dispatch('posts/fetch');
 }
-const posts = computed(() => store.state.posts);
-const currentPost = computed(() => store.getters.currentPost); 
+const posts = computed(() => store.state.posts.all);
+const currentPost = computed(() => store.getters['posts/currentPost']); 
 
 onMounted(() => {
   fetchData();

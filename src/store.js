@@ -4,13 +4,15 @@ import { testPosts } from './testPosts';
 // for simulate fetching data from server
 const delay = () => new Promise(res => setTimeout(res, 1000))
 
-export const store = createStore({
+const posts = {
+    namespaced: true, // this is going to keep all of the state seperate
+
     // because the state is reactive, 
     //it's going to rerender the component and everything is going to updated
     state() {
         return {
             postId: null,
-            posts: []
+            all: []
         }
     },
 
@@ -23,14 +25,14 @@ export const store = createStore({
         },
 
         setPosts(state, posts) {
-            state.posts = posts;
+            state.all = posts;
         }
     },
 
     // we don't want to do any asynchronous fetching in mutations
     // that's going to be done inside of actions.
     actions: {
-        async fetchPosts(ctx) {
+        async fetch(ctx) {
             // ctx.state to access our state
             // ctx.dispatch to call another action
             // ctx.commit to commit a mutation
@@ -42,9 +44,15 @@ export const store = createStore({
     // this is going to be a computed property for your store
     getters: {
      currentPost(state) {
-        return state.posts.find(x => {
+        return state.all.find(x => {
           return x.id === state.postId;
         })
       }
+    }
+}
+
+export const store = createStore({
+    modules: {
+        posts // store.state.posts, store.state.posts.posts
     }
 })
